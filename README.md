@@ -59,6 +59,8 @@ yarn build
 
 #### Development
 ```sh
+yarn start
+// or make a production build
 yarn build
 ```
 

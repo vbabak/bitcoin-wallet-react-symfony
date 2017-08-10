@@ -1,0 +1,35 @@
+.form-row button[type="submit"],
+.form-row button[type="button"] {
+  height: 40px;
+  width: 100%;
+  display: inline-block;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  margin: 0;
+  padding: 10px 15px;
+  border-radius: 3px;
+  text-align: center;
+  text-decoration: none;
+  vertical-align: middle;
+  transition: all .2s ease-in-out;
+}
+
+.form-row button .btn-label {
+  font-size: 16px;
+}
+
+.form-row button[type="submit"] {
+  background: #10ADE4;
+  color: white;
+}
+
+.form-row button[type="submit"]:hover {
+  background: #0e9bcc;
+}
+
+.form-row button[disabled] {
+  opacity: 0.6;
+  cursor: default;
+}

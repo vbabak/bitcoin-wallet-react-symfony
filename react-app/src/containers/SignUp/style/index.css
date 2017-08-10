@@ -1,0 +1,11 @@
+.signup {
+}
+.signup .headline .line1 {
+  font-size: 24px;
+  padding: 8px 0;
+}
+
+.signup .headline .line2 {
+  padding: 8px 0 22px;
+  font-size: 18px;
+}
