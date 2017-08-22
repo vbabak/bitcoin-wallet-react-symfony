@@ -8,21 +8,24 @@ import {createStore, applyMiddleware} from 'redux';
 import registerServiceWorker from './registerServiceWorker';
 import SignIn from './containers/SignIn';
 import SignUp from './containers/SignUp';
+import App from './containers/App';
 import './index.css';
 //
-// const store = createStore(
-//   (state = {}) => state,
-//   applyMiddleware(thunk)
-// );
+const store = createStore(
+  (state = {}) => state,
+  applyMiddleware(thunk)
+);
 
 render(
-  <BrowserRouter>
-    <div>
-      <Route exact path='/' component={SignIn} status={404}/>
-      <Route exact path='/sign-in' component={SignIn}/>
-      <Route exact path='/sign-up' component={SignUp}/>
-    </div>
-  </BrowserRouter>, document.getElementById('root'));
+  <Provider store={store}>
+    <BrowserRouter>
+      <div>
+        <Route exact path={App.component_url} component={App}/>
+        <Route exact path={SignIn.component_url} component={SignIn}/>
+        <Route exact path={SignUp.component_url} component={SignUp}/>
+      </div>
+    </BrowserRouter>
+  </Provider>, document.getElementById('root'));
 //
 // render(
 //   <Provider store={store}>

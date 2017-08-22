@@ -29,6 +29,33 @@ body {
   color: #1e1e1e;
 }
 
+.floatleft {
+  float: left;
+}
+
+.floatright {
+  float: right;
+}
+
+.clear {
+  clear: both;
+  content: '';
+  display: block;
+}
+
+.header {
+}
+
+.header .navbar {
+}
+
+.header .navbar-nav {
+  display: block;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
 .form-row {
   width: 100%;
   padding: 8px 0;
