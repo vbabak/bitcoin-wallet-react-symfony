@@ -3,9 +3,13 @@
 namespace Wallet\ApiBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Wallet\ApiBundle\Entity\User;
+use Wallet\ApiBundle\Form\UserType;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class UserController
@@ -14,8 +18,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
  *
  * @package Wallet\ApiBundle\Controller
  */
-class UserController extends Controller
+class UserController extends APIControllerAbstract
 {
+
     /**
      * Create new user request
      *
@@ -24,7 +29,15 @@ class UserController extends Controller
      */
     public function createUserAction(Request $request)
     {
-        exit('Hi');
+        $user = new User();
+        $post = $this->getJsonFromRequest($request);
+        $this->populateEntityFromArray($user, $post);
+        $errors = $this->validateEntity($user);
+        if (!empty($errors)) {
+            return $this->errorResponse($errors);
+        }
+
+        return $this->successResponse($errors);
     }
 
     /**
@@ -41,7 +54,7 @@ class UserController extends Controller
     /**
      * Get user data by user id
      *
-     * @Route("/{id}", requirements={"id" = "\d+"}, defaults={"id" = 1})
+     * @Route("/{id}", requirements={"id" = "\d+"})
      * @Method({"GET"})
      */
     public function getUserByIdAction($id, Request $request)
