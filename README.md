@@ -32,7 +32,14 @@ Bitcoin wallet, done with React 15 (front-end) and Symfony 3 with MySQL (backend
 #### Install
 ```sh
 cd wallet-api;
+
+// set your db parameters
+cp app/config/parameters.yml.dist app/config/parameters.yml
+
 composer install
+
+sudo a2enmod headers
+sudo service apache2 restart
 ```
 
 #### Development
@@ -53,6 +60,7 @@ composer dump-autoload
 #### Install
 ```sh
 cd react-app
+cp /src/settings/settings.js.tpl /src/settings/settings.js
 yarn install
 yarn build
 ```
