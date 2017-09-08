@@ -24,7 +24,7 @@ class Header extends Component {
             <li>< Link to={SignUp.component_url}>Sign Up</Link></li>
             }
             {!isLoggedIn &&
-            <li>< Link to={SignUp.component_url}>Sign Up</Link></li>
+            <li>< Link to={SignIn.component_url}>Sign In</Link></li>
             }
           </ul>
         </nav>

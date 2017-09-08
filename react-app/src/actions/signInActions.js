@@ -1,7 +1,8 @@
-import axios from 'axios';
+// import axios from 'axios';
+import Settigs from '../settings/settings';
 
-export function userSignInRequest(userData) {
+export function userSignInRequest(data) {
   return dispatch => {
-    return axios.post('http://bitcoin-wallet-react-symfony-api.dev/api/v1/users', userData);
+    // return axios.post(Settigs.wallet_api_url + '/user/' + (Settigs.wallet_api_use_suffix ? Settigs.wallet_api_url_suffix : ''), JSON.stringify(data), {headers: {'content-type': 'application/json'}});
   };
 }

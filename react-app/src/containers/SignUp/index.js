@@ -15,9 +15,11 @@ class SignUp extends Component {
     super(props);
 
     this.state = {
-      email: '',
-      password: '',
-      password2: '',
+      fields: {
+        email: '',
+        password: '',
+        password2: '',
+      }
     };
 
     this.onSubmit = this.onSubmit.bind(this);
@@ -28,9 +30,10 @@ class SignUp extends Component {
     e.preventDefault();
     this.setState({errors: {}});
     const {userSignUpRequest} = this.props; // from react-redux
-    userSignUpRequest(this.state)
+    userSignUpRequest(this.state.fields)
       .then(
-        () => {
+        (responseObj) => {
+          console.log(responseObj);
         },
         ({data}) => this.setState({errors: data.errors})
       )
@@ -40,7 +43,7 @@ class SignUp extends Component {
   }
 
   handleChange(e) {
-    this.setState({[e.target.name]: e.target.value});
+    this.setState({fields: {[e.target.name]: e.target.value}});
   }
 
   render() {
@@ -60,11 +63,11 @@ class SignUp extends Component {
           </div>
           <form onSubmit={this.onSubmit}>
             <TextInput handleChange={this.handleChange} label="Email" type="email" name="email"
-                       value={this.state.email}/>
+                       value={this.state.fields.email}/>
             <TextInput handleChange={this.handleChange} label="New Password" type="password" name="password"
-                       value={this.state.password}/>
+                       value={this.state.fields.password}/>
             <TextInput handleChange={this.handleChange} label="Confirm Password" type="password" name="password2"
-                       value={this.state.password2}/>
+                       value={this.state.fields.password2}/>
             <Button label="Continue" type="submit"/>
           </form>
         </div>
