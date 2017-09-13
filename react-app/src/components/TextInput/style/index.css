@@ -12,12 +12,23 @@
   outline: 0;
   display: inline-block;
 }
+.form-row.error input{
+  border: 1px solid #cc211b;
+}
 
 .form-row .label {
   margin-bottom: 7px;
   font-weight: 600;
   font-size: 14px;
 }
+.form-row.error .label {
+  color: #cc211b;
+}
+
+.form-row.error p.error {
+  color: #cc211b;
+}
+
 .form-row input[type="text"]:focus,
 .form-row input[type="password"]:focus,
 .form-row input[type="email"]:focus

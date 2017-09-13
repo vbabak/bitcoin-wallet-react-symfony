@@ -8,6 +8,8 @@ import Button from '../../components/Button';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import SignIn from '../../containers/SignIn';
+import StringValidator from '../../validators/sting';
+import PasswordValidator from '../../validators/password';
 
 
 class SignUp extends Component {
@@ -17,8 +19,10 @@ class SignUp extends Component {
     this.state = {
       fields: {
         email: '',
-        password: '',
-        password2: '',
+        password: '2',
+        password2: '3',
+      },
+      errors: {
       }
     };
 
@@ -26,10 +30,52 @@ class SignUp extends Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
+  resetFormErrors() {
+    var errors = {};
+    for (var f in this.state.fields) {
+      errors[f] = '';
+    }
+    this.setState({errors: errors});
+  }
+
+  validateForm() {
+    this.resetFormErrors();
+    var errors = {};
+    const emailValidator = new StringValidator(3, 16);
+    if (!emailValidator.isValid(this.state.fields.email)) {
+      errors.email = emailValidator.getErrorMessage();
+      return false;
+    }
+    const passwordStrValidator = new StringValidator(3, 16);
+    if (!passwordStrValidator.isValid(this.state.fields.password)) {
+      errors.password = passwordStrValidator.getErrorMessage();
+    }
+    if (!passwordStrValidator.isValid(this.state.fields.password2)) {
+      errors.password2 = passwordStrValidator.getErrorMessage();
+    }
+    const passwordValidator = new PasswordValidator();
+    if (!passwordValidator.isIdentical(this.state.fields.password, this.state.fields.password2)) {
+      errors.password2 = passwordValidator.getErrorMessage();
+    }
+    if (!passwordValidator.isValid(this.state.fields.password)) {
+      errors.password = passwordValidator.getErrorMessage();
+    }
+
+    if (Object.keys(errors).length) {
+      var newState = Object.assign({}, this.state);
+      newState.errors = errors;
+      this.setState({errors: errors});
+      return false;
+    }
+    return true;
+  }
+
   onSubmit(e) {
     e.preventDefault();
-    this.setState({errors: {}});
     const {userSignUpRequest} = this.props; // from react-redux
+    if (!this.validateForm()) {
+      return false;
+    }
     userSignUpRequest(this.state.fields)
       .then(
         (responseObj) => {
@@ -43,7 +89,9 @@ class SignUp extends Component {
   }
 
   handleChange(e) {
-    this.setState({fields: {[e.target.name]: e.target.value}});
+    var newState = Object.assign({}, this.state);
+    newState.fields[[e.target.name]] = e.target.value;
+    this.setState(newState);
   }
 
   render() {
@@ -63,11 +111,11 @@ class SignUp extends Component {
           </div>
           <form onSubmit={this.onSubmit}>
             <TextInput handleChange={this.handleChange} label="Email" type="email" name="email"
-                       value={this.state.fields.email}/>
+                       value={this.state.fields.email} error={this.state.errors.email}/>
             <TextInput handleChange={this.handleChange} label="New Password" type="password" name="password"
-                       value={this.state.fields.password}/>
+                       value={this.state.fields.password} error={this.state.errors.password}/>
             <TextInput handleChange={this.handleChange} label="Confirm Password" type="password" name="password2"
-                       value={this.state.fields.password2}/>
+                       value={this.state.fields.password2} error={this.state.errors.password2}/>
             <Button label="Continue" type="submit"/>
           </form>
         </div>
@@ -79,8 +127,8 @@ class SignUp extends Component {
 
 SignUp.component_url = '/sign-up';
 
-SignUp.PropTypes = {
-  userSignUpRequest: React.PropTypes.func.isRequired
-};
+// SignUp.PropTypes = {
+//   userSignUpRequest: React.PropTypes.func.isRequired
+// };
 
 export default connect(null, {userSignUpRequest})(SignUp);

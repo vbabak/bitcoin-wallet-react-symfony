@@ -11,9 +11,12 @@ class TextInput extends Component {
     this.value = props.value || '';
     this.className = props.className || '';
     this.disabled = props.disabled || false;
+    this.error = props.error || '';
 
     this.state = {
-      [this.name]: this.value
+      [this.name]: this.value,
+      disabled: this.disabled,
+      error: this.error
     };
 
     this.handleChangeByParent = props.handleChange || null;
@@ -28,11 +31,22 @@ class TextInput extends Component {
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    var newState = Object.assign({}, this.state);
+    newState.error = nextProps.error;
+    newState.disabled = nextProps.disabled;
+    newState[this.name] = nextProps.value;
+    this.setState(newState);
+  }
+
   render() {
     return (
-      <div className="form-row">
-        <div className="label">{this.label}</div>
-        <input value={this.state[this.name]} name={this.name} type={this.type} required={this.required} disabled={this.disabled} onChange={this.handleChange} className={this.className}/>
+      <div className={"form-row" + (this.state.error ? " error" : "")}>
+        <div className="label">{this.label} {this.error}</div>
+        <input value={this.state[this.name]} name={this.name} type={this.type} required={this.required} disabled={this.state.disabled} onChange={this.handleChange} className={this.className}/>
+        {this.state.error &&
+        <p className="error">{this.state.error}</p>
+        }
       </div>
     );
   }
@@ -41,8 +55,8 @@ class TextInput extends Component {
 /**
  * Define required props
  */
-TextInput.propTypes = {
-  handleChange: React.PropTypes.func.isRequired
-};
+// TextInput.propTypes = {
+//   handleChange: React.PropTypes.func.isRequired
+// };
 
 export default TextInput;

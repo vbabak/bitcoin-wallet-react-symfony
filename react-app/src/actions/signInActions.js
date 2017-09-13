@@ -1,5 +1,5 @@
 // import axios from 'axios';
-import Settigs from '../settings/settings';
+// import Settigs from '../settings/settings';
 
 export function userSignInRequest(data) {
   return dispatch => {

@@ -67,8 +67,8 @@ class SignIn extends Component {
 
 SignIn.component_url = '/sign-in';
 
-SignIn.PropTypes = {
-  userSignInRequest: React.PropTypes.func.isRequired
-};
+// SignIn.PropTypes = {
+//   userSignInRequest: React.PropTypes.func.isRequired
+// };
 
 export default connect((state) => { return {} }, {userSignInRequest})(SignIn);
